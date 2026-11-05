@@ -1,24 +1,47 @@
-# Ejercicio 2 - Arreglo Rotado
+# Rotated Array Search Lab — Búsqueda binaria modificada
 
-Este repositorio contiene la implementación del algoritmo para encontrar el elemento mínimo en un arreglo rotado y la resolución de las preguntas teóricas de la guía.
+Ejercicio académico en **C#** sobre búsqueda del mínimo en un arreglo originalmente ordenado y después rotado. El programa [`Program.cs`](Program.cs) muestra las decisiones de un algoritmo tipo *divide y vencerás* paso a paso en consola.
 
-## Pregunta a: Identificación y Justificación de la Técnica
+> **Estado:** demostración educativa con un arreglo fijo. No es una biblioteca general, un servicio web ni un módulo probado para todas las clases de entrada.
 
-### Técnica de Diseño Utilizada
-**Divide y Vencerás** (aplicada mediante una variante de la Búsqueda Binaria).
+## Problema y ejemplo
 
-### Justificación
-El algoritmo utiliza esta técnica debido a los siguientes puntos clave de su funcionamiento:
+Dado el arreglo rotado:
 
-1. **División:** En cada iteración del ciclo, calcula un punto medio (`centro`) dividiendo el espacio de búsqueda actual en dos mitades.
-2. **Reducción del problema:** Mediante la comparación condicional `A[centro] > A[fin]`, el algoritmo determina con total certeza en cuál de las dos mitades se encuentra el punto de rotación (el elemento mínimo).
-3. **Descarte:** Al identificar la mitad correcta, modifica los punteros (`inicio = centro + 1` o `fin = centro`), descartando por completo la otra mitad. Esto reduce el tamaño del problema a la mitad en cada paso, logrando una eficiencia de tiempo de O(log n).
+```text
+[21, 38, 45, 2, 16]
+```
 
+el mínimo es **2**, ubicado en el **índice 3** (basado en cero). El código usa dos límites, `inicio` y `fin`, y los reduce comparando `A[centro]` con `A[fin]`.
 
-## Demostración web (frontend propio)
+**Complejidad:** en la entrada asumida (valores distintos, arreglo ordenado y rotado), el procedimiento reduce el rango y alcanza **O(log n)** de tiempo y **O(1)** de memoria adicional. El algoritmo actual **no maneja correctamente todos los casos de duplicados o arreglos vacíos**, por lo que no debe presentarse como búsqueda binaria general.
 
-Se incorporó una [interfaz experimental en docs/index.html](docs/index.html) que puede utilizarse como fuente de GitHub Pages. **No se ha confirmado aún la activación ni la URL pública de GitHub Pages.**
+## Ejecutar localmente
 
-Para publicarla, configurar GitHub Pages con rama main y carpeta /docs, verificar el sitio y agregar su URL comprobada a la sección About del repositorio. La interfaz es una adaptación o visualización didáctica; consultar sus límites en la propia página.
+La versión original contiene `Program.cs`, pero no un proyecto `.csproj`. En Visual Studio o VS Code con el SDK .NET, crea un proyecto de consola de desarrollo y reemplaza su `Program.cs` por el archivo de este repositorio:
 
-[Estudio de evolución y requisitos de seguridad](docs/ESTUDIO_DE_EVOLUCION_2026-10-30.md).
+```bash
+dotnet new console -n RotatedArrayDemo
+```
+
+Copia `Program.cs` dentro de `RotatedArrayDemo/` y ejecuta `dotnet run --project RotatedArrayDemo`. El archivo existente requiere un SDK compatible con sintaxis moderna de C#.
+
+## Organización
+
+| Recurso | Contenido |
+|---|---|
+| [`Program.cs`](Program.cs) | Ejemplo y trazas de búsqueda |
+| [`docs/index.html`](docs/index.html) | Visualización didáctica para previsualización estática |
+| [`docs/ENGINEERING_ROADMAP_2026-11-04.md`](docs/ENGINEERING_ROADMAP_2026-11-04.md) | Plan de pruebas y modularización |
+| [`docs/ARCHITECTURE_SCALABILITY_2026-11-04.md`](docs/ARCHITECTURE_SCALABILITY_2026-11-04.md) | Análisis de complejidad y límites |
+
+La demo web puede configurarse con GitHub Pages, pero **no se ha comprobado aquí que exista un despliegue público activo**.
+
+## Evolución técnica
+
+- Extraer `BuscarPosicionMinimo` a una clase reutilizable con precondiciones documentadas.
+- Añadir tests de arreglo vacío, no rotado, un elemento, rotaciones sucesivas y duplicados.
+- Comparar búsqueda lineal de referencia y búsqueda binaria modificada en casos replicables.
+- Incorporar un proyecto .NET y CI antes de declarar una librería reutilizable.
+
+**Propósito:** aprendizaje de algoritmos. No se justifica infraestructura de servidores ni promesas de alto rendimiento sin pruebas.
